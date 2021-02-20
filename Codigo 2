@@ -1,0 +1,54 @@
+System;
+
+using System;
+
+public class Tarea
+{
+    public static void Main(){
+        int torta = 0;
+        int pago = 0;
+        int vuelto = 0;
+
+        Console.Writeline("B I E N V E N I D O");
+        
+        do
+        {            
+            //Filtro de entrada n°1      
+            do{
+                Console.Writeline("Ingrese el número de pedidos");
+                Console.ReadLine();
+                Console.Writeline("Ingrese el monto del pago");
+                Console.ReadLine();
+                
+                if(pago<1 && torta<=1){
+                    Console.Writeline('El monto ingresado o la cantidad ingresada no puede ser menor a cero');
+                }
+                      
+            }while (pago>= 0 && torta>0);
+
+             //Bloques de operacion
+            if (pago==2 && torta == 1){
+                Console.WriteLine("El pago es exacto");
+                vuelto = 0;
+                
+            }else if(torta<2 || pago < 2){ //operacion para más de un producto
+
+             torta *= 2;
+             vuelto = torta / pago;
+
+                if (vuelto=1)
+                {
+                    Console.Writeline("la cantidad es exacta");
+                }else if (vuelto < 1 || vuelto >1){
+                    Console.Writeline("")
+                }
+            }else{
+                Console.Writeline("Datos erroneos");
+            }
+
+        } while (vuelto=1 || vuelto = 0);
+        Console.WriteLine("Operacion Completada");
+
+        Console.WriteLine("GrEgOrIo OrTeGa");
+    }
+}
