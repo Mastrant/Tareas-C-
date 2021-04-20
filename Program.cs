@@ -1,705 +1,731 @@
 ﻿using System;
+using System.Threading;
 
-namespace Proyecto_c{
-    class Program{
+namespace Automata_Celular_en_consola
+{
+    class Program
+    {
+        //retarso de actualizacion dle sistema
+        private const int retraso = 200;
 
-        static void Main(string[] args){
-            float edad = 0;
-            int tipo_Actividad;
-            Boolean Fin = false;
-            string Ctipo_actividad = "";
+        //tamaño del espacio
 
-            Console.WriteLine("Hola, Bienvenido");
-                    
-            /*definicon de valores predeterminados por tipo
-            *de actividas para categoria adulto*/
+        static void Main(string[] args)
+        {
+            const int tamaño = 40;
 
-            String[] actividad_Alta = new string[8];
-
-             actividad_Alta[0] = "60gr-115gr";
-             actividad_Alta[1] = "115gr-190gr";
-             actividad_Alta[2] = "190gr-255gr";
-             actividad_Alta[3] = "255gr-380gr";
-             actividad_Alta[4] = "380gr-535gr";
-             actividad_Alta[5] = "535gr-680gr";
-             actividad_Alta[6] = "680gr-820gr";
-             actividad_Alta[7] = "820gr-985gr";
-
+            double Uduracion = 100;
+            //Vairables de seguridad
             
+            Random r = new Random();
 
-            String[] actividad_Media = new string[8];
-             actividad_Media[0] = "55gr-100gr";
-             actividad_Media[1] = "100gr-170gr";
-             actividad_Media[2] = "170gr-255gr";
-             actividad_Media[3] = "255gr-330gr";
-             actividad_Media[4] = "330gr-475gr";
-             actividad_Media[5] = "475gr-600gr";
-             actividad_Media[6] = "600gr-720gr";
-             actividad_Media[7] = "820gr-985gr";
+            // espacio que almacena las células
+            string[,] mapa = new string[tamaño, tamaño];
+            int[,] log_mapa = new int[tamaño, tamaño];
 
+            string[,] AMapa = new string[tamaño, tamaño];
+            int[,] log_Amapa = new int[tamaño, tamaño];
 
+            //inicializacion del sistema:
 
-            String[] actividad_Baja = new string[8];
-
-            actividad_Baja[0] = "45gr-85gr";
-            actividad_Baja[1] = "85gr-145gr";
-            actividad_Baja[2] = "145gr-195gr";
-            actividad_Baja[3] = "195gr-285gr";
-            actividad_Baja[4] = "285gr-410gr";
-            actividad_Baja[5] = "410gr-520gr";
-            actividad_Baja[6] = "520gr-620gr";
-            actividad_Baja[7] = "620gr-750gr";
-
-            int[] Mes2 = new int[11];
-            Mes2[0] = 50;
-            Mes2[1] = 95;
-            Mes2[2] = 155;
-            Mes2[3] = 215;
-            Mes2[4] = 270;
-            Mes2[5] = 300;
-            Mes2[6] = 355;
-            Mes2[7] = 405;
-            Mes2[8] = 450;
-            Mes2[9] = 485;
-            Mes2[10] = 580;
+            Console.WriteLine("Bienvenido al Automata Celular de consola creado por Gregorio Ortega \n");
 
 
-            int[] Mes3 = new int[10];
+            bool pass = false;
+            while (pass == (false)) {
+                Console.WriteLine("Ingrese el números de veces que se repetirá el programa \n min: 50 max: 10000");
+                Uduracion = Convert.ToInt32(Console.ReadLine());
+                if (Uduracion >= 50 && Uduracion < 10001)
+                {
+                    Uduracion = (int)Uduracion;
 
-            Mes3[0] = 60;
-            Mes3[1] = 110;
-            Mes3[2] = 185;
-            Mes3[3] = 265;
-            Mes3[4] = 350;
-            Mes3[5] = 400;
-            Mes3[6] = 475;
-            Mes3[7] = 545;
-            Mes3[8] = 605;
-            Mes3[9] = 670;
-
-            int[] Mes4 = new int[9];
-
-            Mes4[0] = 60;
-            Mes4[1] = 115;
-            Mes4[2] = 195;
-            Mes4[3] = 285;
-            Mes4[4] = 375;
-            Mes4[5] = 445;
-            Mes4[6] = 525;
-            Mes4[7] = 610;
-            Mes4[8] = 685;
-
-            int[] Mes5 = new int[8];
-
-            Mes5[0] = 60;
-            Mes5[1] = 115;
-            Mes5[2] = 190;
-            Mes5[3] = 285;
-            Mes5[4] = 375;
-            Mes5[5] = 450;
-            Mes5[6] = 530;
-            Mes5[7] = 625;
-
-            int[] Mes6_12 = new int[7];
-
-            Mes6_12[0] = 55;
-            Mes6_12[1] = 110;
-            Mes6_12[2] = 185;
-            Mes6_12[3] = 280;
-            Mes6_12[4] = 370;
-            Mes6_12[5] = 450;
-            Mes6_12[6] = 530;
-
-
-            /*selecion del tipo de mascota que se tiene
-             * si es cachorro o adulto*/
-
-            while (Fin == false){ 
-                if (edad != 0){
-                    edad = 0;
+                    pass = true;
                 }
-                Console.WriteLine("Ingrese la edad de su mascota en meses");
+                else if (Uduracion > 50)
+                {
+                    Uduracion = 50;
+                    pass = true;
+                }
+            }
 
-                edad = int.Parse(Console.ReadLine());
+            arranque(retraso);
 
-                //categoria adulto
-                if (edad >= 12 && edad <= 144){
+            //limpieza del mapa
+           
+            int Espacios = 0;
+            int Mapa_Length = mapa.Length;
 
-                    Console.WriteLine("Categoría Adulto ");
-
-                    Console.WriteLine("---------------------------------------------------------------");
-
-                    //peso adulto
-                    Console.WriteLine("Ingrese el peso de su mascota en Kg");
-                    int peso = 0;
-                    peso = (int)float.Parse(Console.ReadLine());
-                    if (peso < 0)
-                    {
-                        Console.WriteLine("Valor ingresado incorrecto");
-
-                        //tamaño diminuto
-                    }
-                    else if (peso >= 1 && peso < 5)
-                    {
-                        Console.WriteLine("ingrese el tipo de actividad de su mascota");
-                        Console.WriteLine("(1)Alta, (2)Media, (3)Baja");
-                        tipo_Actividad = int.Parse(Console.ReadLine());
-                        string Resultado = "";
-                        switch (tipo_Actividad)
-                        {
-                            case 1:
-                                Ctipo_actividad = "Actividad Alta";
-                                Resultado = actividad_Alta[0];
-                                break;
-                            case 2:
-                                Ctipo_actividad = "Actividad Media";
-                                Resultado = actividad_Media[0];
-                                break;
-                            case 3:
-                                Ctipo_actividad = "Actividad Baja";
-                                Resultado = actividad_Baja[0];
-                                break;
-                        }
-                        Console.WriteLine("Peso: "+ peso + " kg");
-                         edad = edad / 12;
-                        Console.WriteLine("Edad: " + edad + " Años");
-                        Console.WriteLine("Tipo de actividad: "+ Ctipo_actividad);
-                        Console.WriteLine("Cantidad de alimento necesario:"+ Resultado);
-                        int salir;
-                        Console.WriteLine("¿Desea salir?");
-                        Console.WriteLine("(1) Si (0)No");
-                        do{
-                         salir = int.Parse(Console.ReadLine());
-                        } while (salir == 0 || salir == 1);
-                        if (salir == 1){
-                            Fin = true;
-                        }
-
-                        //tamaño pequeño
-                    }
-                    else if (peso >= 5 && peso < 10)
-                    {
-                        Console.WriteLine("ingrese el tipo de actividad de su mascota");
-                        Console.WriteLine("(1)Alta, (2)Media, (3)Baja");
-                        tipo_Actividad = int.Parse(Console.ReadLine());
-                        string Resultado = "";
-                        switch (tipo_Actividad)
-                        {
-                            case 1:
-                                Ctipo_actividad = "Actividad Alta";
-                                Resultado = actividad_Alta[1];
-                                break;
-                            case 2:
-                                Ctipo_actividad = "Actividad Media";
-                                Resultado = actividad_Media[1];
-                                break;
-                            case 3:
-                                Ctipo_actividad = "Actividad Baja";
-                                Resultado = actividad_Baja[1];
-                                break;
-                        }
-                        Console.WriteLine("Peso: " + peso);
-                        edad = edad / 12;
-                        Console.WriteLine("Edad: " + edad + " Años");
-                        Console.WriteLine("Tipo de actividad: " + Ctipo_actividad);
-                        Console.WriteLine("Cantidad de alimento necesario:" + Resultado);
-                        int salir;
-                        Console.WriteLine("¿Desea salir?");
-                        Console.WriteLine("(1) Si (0)No");
-                        do
-                        {
-                            salir = int.Parse(Console.ReadLine());
-                        } while (salir == 0 || salir == 1);
-                        if (salir == 1)
-                        {
-                            Fin = true;
-                        }
-
-                        //tamaño mediano
-                    }
-                    else if (peso > 10 && peso < 15)
-                    {
-                        Console.WriteLine("ingrese el tipo de actividad de su mascota");
-                        Console.WriteLine("(1)Alta, (2)Media, (3)Baja");
-                        tipo_Actividad = int.Parse(Console.ReadLine());
-                        string Resultado = "";
-                        switch (tipo_Actividad)
-                        {
-                            case 1:
-                                Ctipo_actividad = "Actividad Alta";
-                                Resultado = actividad_Alta[2];
-                                break;
-                            case 2:
-                                Ctipo_actividad = "Actividad Media";
-                                Resultado = actividad_Media[2];
-                                break;
-                            case 3:
-                                Ctipo_actividad = "Actividad Baja";
-                                Resultado = actividad_Baja[2];
-                                break;
-                        }
-                        Console.WriteLine("Peso: " + peso);
-                        edad = edad / 12;
-                        Console.WriteLine("Edad: " + edad + " Años");
-                        Console.WriteLine("Tipo de actividad: " + Ctipo_actividad);
-                        Console.WriteLine("Cantidad de alimento necesario:" + Resultado);
-                        int salir;
-                        Console.WriteLine("¿Desea salir?");
-                        Console.WriteLine("(1) Si (0)No");
-                        do
-                        {
-                            salir = int.Parse(Console.ReadLine());
-                        } while (salir == 0 || salir == 1);
-                        if (salir == 1)
-                        {
-                            Fin = true;
-                        }
-
-
-                        //tamaño grande
-                    }
-                    else if (peso > 15 && peso < 90){
-
-                        Console.WriteLine("ingrese el tipo de actividad de su mascota");
-                        Console.WriteLine("(1)Alta, (2)Media, (3)Baja");
-                        tipo_Actividad = int.Parse(Console.ReadLine());
-                        string Resultado = "";
-                        switch (tipo_Actividad)
-                        {
-                            case 1:
-                                Ctipo_actividad = "Actividad Alta";
-
-                                if (peso >= 15 && peso < 25)
-                                {
-                                    Resultado = actividad_Alta[3];
-                                }
-                                else if (peso >= 25 && peso < 40)
-                                {
-                                    Resultado = actividad_Alta[4];
-                                }
-                                else if (peso >= 40 && peso < 55)
-                                {
-                                    Resultado = actividad_Alta[5];
-                                }
-                                else if (peso >= 55 && peso < 70)
-                                {
-                                    Resultado = actividad_Alta[6];
-                                }
-                                else if (peso >= 70 && peso <= 90)
-                                {
-                                    Resultado = actividad_Alta[7];
-                                }
-                                else
-                                {
-                                    Console.WriteLine("Peso indicado no valido");
-                                }
-                                    break;
-                            case 2:
-                                Ctipo_actividad = "Actividad Media";
-                                if (peso >= 15 && peso < 25)
-                                {
-                                    Resultado = actividad_Media[3];
-                                }
-                                else if (peso >= 25 && peso < 40)
-                                {
-                                    Resultado = actividad_Media[4];
-                                }
-                                else if (peso >= 40 && peso < 55)
-                                {
-                                    Resultado = actividad_Media[5];
-                                }
-                                else if (peso >= 55 && peso < 70)
-                                {
-                                    Resultado = actividad_Media[6];
-                                }
-                                else if (peso >= 70 && peso <= 90)
-                                {
-                                    Resultado = actividad_Media[7];
-                                }
-                                else
-                                {
-                                    Console.WriteLine("Peso indicado no valido");
-                                }
-                                break;
-
-                            case 3:
-                                Ctipo_actividad = "Actividad Baja";
-                                if (peso >= 15 && peso < 25)
-                                {
-                                    Resultado = actividad_Baja[3];
-                                }
-                                else if (peso >= 25 && peso < 40)
-                                {
-                                    Resultado = actividad_Baja[4];
-                                }
-                                else if (peso >= 40 && peso < 55)
-                                {
-                                    Resultado = actividad_Baja[5];
-                                }
-                                else if (peso >= 55 && peso < 70)
-                                {
-                                    Resultado = actividad_Baja[6];
-                                }
-                                else if (peso >= 70 && peso <= 90)
-                                {
-                                    Resultado = actividad_Baja[7];
-                                }
-                                else
-                                {
-                                    Console.WriteLine("Peso indicado no valido");
-                                }
-
-                                break;
-                        }
-                        Console.WriteLine("Peso: " + peso);
-                        edad = edad / 12;
-                        Console.WriteLine("Edad: " + edad + " Años");
-                        Console.WriteLine("Tipo de actividad: " + Ctipo_actividad);
-                        Console.WriteLine("Cantidad de alimento necesario:" + Resultado);
-                        int salir;
-                        Console.WriteLine("¿Desea salir?");
-                        Console.WriteLine("(1) Si (0)No");
-                        do
-                        {
-                            salir = int.Parse(Console.ReadLine());
-                        } while (salir != 1 || salir == 1);
-                        if (salir == 1)
-                        {
-                            Fin = true;
-                        }
-                    }
-
-                } /*Categoría cachorro*/
-                else if (edad > 0 && edad < 12)
+            for (int j = 0; j < (tamaño); j++)
+            {
+                for (int i = 0; i < (tamaño); i++)
                 {
 
-                    Console.WriteLine("Categoría Cachorro ");
+                    log_mapa[i, j] = 0;
+                    log_Amapa[i, j] = 0;
+                    mapa[i, j] = " ";
+                    AMapa[i, j] = " ";
+                    Espacios++;
 
-                    Console.WriteLine("---------------------------------------------------------------");
+                }
+            }
+
+            //ciclo de limpieza
+
+            Thread.Sleep(retraso);
+            Console.Clear();
+            //inicializacion correcta de Matrices temporales.
+
+            //funcion correr programa
+            bool Correr_Programa(int Espacios, int Mapa_Length)
+            {
+                bool estado;
+                if (Espacios == Mapa_Length)
+                {
+                    estado = true;
+                }
+                else
+                {
+                    estado = false;
+                }
+                return estado;
+            }
 
 
-                    //peso Cachorro
-                    //key do-while
-                    Boolean entrada = false;
+            bool Correr = Correr_Programa(Espacios, Mapa_Length);
 
-                    //seguro de entrada
-                    
-                        Console.WriteLine("Ingrese el peso ideal de adulto de su mascota en Kg");
-                        float peso = 0;
-                        peso = (int)float.Parse(Console.ReadLine());
-                   
-                        switch (peso)
-                        {
+            //programa de simulacion
 
-                            case 2:
-                                entrada = true;
-                               if (edad == 1) {
-                                    Console.WriteLine("No se debe subminitrar alimento");
-                                }
-                                else if (edad == 2){
-                                    Console.WriteLine("Edad: " + edad);
-                                    Console.WriteLine("peso ideal de adulto: "+ peso);
-                                    Console.WriteLine("Alimento necesario: "+ Mes2[0]+"Gr");
-                                }
-                                else if(edad == 3){
-                                    Console.WriteLine("Alimento necesario: " + Mes3[0] + "Gr");
-                                }
-                                else if( edad == 4){
-                                    Console.WriteLine("Alimento necesario: " + Mes4[0] + "Gr");
-                                }
-                                else if(edad == 5){
-                                    Console.WriteLine("Alimento necesario: " + Mes5[0] + "Gr");
-                                }
-                                else if (edad >= 6) {
-                                    Console.WriteLine("Alimento necesario: " + Mes6_12[0] + "Gr");
-                                }
-                                
-                                break;
+            if (Correr == true)
+            {
+                Console.WriteLine($"Condicion del programa: {Correr}");
+                Thread.Sleep(retraso);
+                Console.Clear();
 
-                            case 5:
-                                entrada = true;
+                //Seleecion de simulación
 
-                                if (edad == 1)
-                                {
-                                    Console.WriteLine("No se debe subminitrar alimento");
-                                }
-                                else if (edad == 2)
-                                {
-                                    Console.WriteLine("Alimento necesario: " + Mes2[1] + "Gr");
-                                }
-                                else if (edad == 3)
-                                {
-                                    Console.WriteLine("Alimento necesario: " + Mes3[1] + "Gr");
-                                }
-                                else if (edad == 4)
-                                {
-                                    Console.WriteLine("Alimento necesario: " + Mes4[1] + "Gr");
-                                }
-                                else if (edad == 5)
-                                {
-                                    Console.WriteLine("Alimento necesario: " + Mes5[1] + "Gr");
-                                }
-                                else if (edad >= 6)
-                                {
-                                    Console.WriteLine("Alimento necesario: " + Mes6_12[1] + "Gr");
-                                }
+                int hh = 0;
+                do
+                {
+                    Console.WriteLine("inserte el numero de simulacion que desea ver \n");
 
-                                break;
-
-                            case 10:
-                                entrada = true;
-                                if (edad == 1)
-                                {
-                                    Console.WriteLine("No se debe subminitrar alimento");
-                                }
-                                else if (edad == 2)
-                                {
-                                    Console.WriteLine("Alimento necesario: " + Mes2[2] + "Gr");
-                                }
-                                else if (edad == 3)
-                                {
-                                    Console.WriteLine("Alimento necesario: " + Mes3[2] + "Gr");
-                                }
-                                else if (edad == 4)
-                                {
-                                    Console.WriteLine("Alimento necesario: " + Mes4[2] + "Gr");
-                                }
-                                else if (edad == 5)
-                                {
-                                    Console.WriteLine("Alimento necesario: " + Mes5[2] + "Gr");
-                                }
-                                else if (edad >= 6)
-                                {
-                                    Console.WriteLine("Alimento necesario: " + Mes6_12[2] + "Gr");
-                                }
-
-                                break;
-
-                            case 17:
-                                entrada = true;
-                                if (edad == 1)
-                                {
-                                    Console.WriteLine("No se debe subminitrar alimento");
-                                }
-                                else if (edad == 2)
-                                {
-                                    Console.WriteLine("Alimento necesario: " + Mes2[3] + "Gr");
-                                }
-                                else if (edad == 3)
-                                {
-                                    Console.WriteLine("Alimento necesario: " + Mes3[3] + "Gr");
-                                }
-                                else if (edad == 4)
-                                {
-                                    Console.WriteLine("Alimento necesario: " + Mes4[3] + "Gr");
-                                }
-                                else if (edad == 5)
-                                {
-                                    Console.WriteLine("Alimento necesario: " + Mes5[3] + "Gr");
-                                }
-                                else if (edad >= 6)
-                                {
-                                    Console.WriteLine("Alimento necesario: " + Mes6_12[3] + "Gr");
-                                }
-
-                                break;
-
-                            case 25:
-                                entrada = true;
-                                if (edad == 1)
-                                {
-                                    Console.WriteLine("No se debe subminitrar alimento");
-                                }
-                                else if (edad == 2)
-                                {
-                                    Console.WriteLine("Alimento necesario: " + Mes2[4] + "Gr");
-                                }
-                                else if (edad == 3)
-                                {
-                                    Console.WriteLine("Alimento necesario: " + Mes3[4] + "Gr");
-                                }
-                                else if (edad == 4)
-                                {
-                                    Console.WriteLine("Alimento necesario: " + Mes4[4] + "Gr");
-                                }
-                                else if (edad == 5)
-                                {
-                                    Console.WriteLine("Alimento necesario: " + Mes5[4] + "Gr");
-                                }
-                                else if (edad >= 6)
-                                {
-                                    Console.WriteLine("Alimento necesario: " + Mes6_12[4] + "Gr");
-                                }
-
-                                break;
-
-                            case 32:
-                                entrada = true;
-                                if (edad == 1)
-                                {
-                                    Console.WriteLine("No se debe subminitrar alimento");
-                                }
-                                else if (edad == 2)
-                                {
-                                    Console.WriteLine("Alimento necesario: " + Mes2[5] + "Gr");
-                                }
-                                else if (edad == 3)
-                                {
-                                    Console.WriteLine("Alimento necesario: " + Mes3[5] + "Gr");
-                                }
-                                else if (edad == 4)
-                                {
-                                    Console.WriteLine("Alimento necesario: " + Mes4[5] + "Gr");
-                                }
-                                else if (edad == 5)
-                                {
-                                    Console.WriteLine("Alimento necesario: " + Mes5[5] + "Gr");
-                                }
-                                else if (edad >= 6)
-                                {
-                                    Console.WriteLine("Alimento necesario: " + Mes6_12[5] + "Gr");
-                                }
-
-                                break;
-
-                            case 40:
-                                entrada = true;
-                                if (edad == 1)
-                                {
-                                    Console.WriteLine("No se debe subminitrar alimento");
-                                }
-                                else if (edad == 2)
-                                {
-                                    Console.WriteLine("Alimento necesario: " + Mes2[6] + "Gr");
-                                }
-                                else if (edad == 3)
-                                {
-                                    Console.WriteLine("Alimento necesario: " + Mes3[6] + "Gr");
-                                }
-                                else if (edad == 4)
-                                {
-                                    Console.WriteLine("Alimento necesario: " + Mes4[6] + "Gr");
-                                }
-                                else if (edad == 5)
-                                {
-                                    Console.WriteLine("Alimento necesario: " + Mes5[6] + "Gr");
-                                }
-                                else if (edad >= 6)
-                                {
-                                    Console.WriteLine("Alimento necesario: " + Mes6_12[6] + "Gr");
-                                }
-
-                                break;
-
-                            case 50:
-                                entrada = true;
-                                if (edad == 1)
-                                {
-                                    Console.WriteLine("No se debe subminitrar alimento");
-                                }
-                                else if (edad == 2)
-                                {
-                                    Console.WriteLine("Alimento necesario: " + Mes2[7] + "Gr");
-                                }
-                                else if (edad == 3)
-                                {
-                                    Console.WriteLine("Alimento necesario: " + Mes3[7] + "Gr");
-                                }
-                                else if (edad == 4)
-                                {
-                                    Console.WriteLine("Alimento necesario: " + Mes4[7] + "Gr");
-                                }
-                                else if (edad == 5)
-                                {
-                                    Console.WriteLine("Alimento necesario: " + Mes5[7] + "Gr");
-                                }
-                                
-
-                                break;
-
-                            case 60:
-                                entrada = true;
-                                if (edad == 1)
-                                {
-                                    Console.WriteLine("No se debe subminitrar alimento");
-                                }
-                                else if (edad == 2)
-                                {
-                                    Console.WriteLine("Alimento necesario: " + Mes2[8] + "Gr");
-                                }
-                                else if (edad == 3)
-                                {
-                                    Console.WriteLine("Alimento necesario: " + Mes3[8] + "Gr");
-                                }
-                                else if (edad == 4)
-                                {
-                                    Console.WriteLine("Alimento necesario: " + Mes4[8] + "Gr");
-                                }
-                            
-                                break;
-
-                            case 70:
-                                entrada = true;
-                                if (edad == 1)
-                                {
-                                    Console.WriteLine("No se debe subminitrar alimento");
-                                }
-                                else if (edad == 2)
-                                {
-                                    Console.WriteLine("Alimento necesario: " + Mes2[9] + "Gr");
-                                }
-                                else if (edad == 3)
-                                {
-                                    Console.WriteLine("Alimento necesario: " + Mes3[9] + "Gr");
-                                }
-                               
-
-                                break;
-
-                            case 90:
-                                
-                                if (edad == 1)
-                                {
-                                    Console.WriteLine("No se debe subminitrar alimento");
-                                }
-                                else if (edad == 2)
-                                {
-                                    Console.WriteLine("Alimento necesario: " + Mes2[10] + "Gr");
-                                }
-                             
-                                break;
-
-                            default:
-                                Console.WriteLine("valor ingresado noválido");
-                                break;
-
-                        }
-                    int salir;
-                    Console.WriteLine("¿Desea salir?");
-                    Console.WriteLine("(1) Si (0)No");
-                    do
+                    for (int h = 1; h < 7; h++)
                     {
-                        salir = int.Parse(Console.ReadLine());
-                    } while (salir != 1 || salir == 1);
-                    if (salir == 1)
-                    {
-                        Fin = true;
+                        Console.WriteLine($"Simulación {h} = {h} \n");
                     }
 
+                    hh = Convert.ToInt32(Console.ReadLine());
+                } while (hh == 0);
+
+
+                //Valores precargados de la matriz
+                switch (hh)
+                {
+                    case 1:
+                        Console.WriteLine("caso 1");
+                        Thread.Sleep(retraso);
+
+                        //   i  j
+                        log_mapa[4, 0] = 1;
+                        log_mapa[4, 1] = 1;
+                        log_mapa[4, 2] = 1;
+                        log_mapa[4, 3] = 1;
+                        log_mapa[10, 0] = 1;
+                        log_mapa[10, 1] = 1;
+                        log_mapa[10, 2] = 1;
+                        log_mapa[9, 3] = 1;
+                        log_mapa[0, 4] = 1;
+                        log_mapa[1, 4] = 1;
+                        log_mapa[2, 4] = 1;
+                        log_mapa[2, 5] = 1;
+                        log_mapa[0, 10] = 1;
+                        log_mapa[1, 10] = 1;
+                        log_mapa[2, 10] = 1;
+                        log_mapa[2, 9] = 1;
+
+
+
+
+
+                        //Convercion de binario a string de Celulas vivas en mapa 
+                        for (int t = 0; t < tamaño; t++)
+                        {
+                            for (int p = 0; p < tamaño; p++)
+                            {
+                                if (log_mapa[p, t] == 1) {
+
+                                    mapa[p, t] = "O";
+                                }
+                                else
+                                {
+                                    mapa[p, t] = " ";
+                                }
+
+                            }
+                        }
+
+
+                        break;
+
+                    case 2:
+
+                        Console.WriteLine("caso 2 random");
+
+                        for (int t = 0; t < tamaño; t++) {
+                            for (int p = 0; p < tamaño; p++) {
+
+                                //   p  t
+                                log_mapa[p, t] = r.Next(0, 2);
+                            }
+                        }
+
+                        //Convercion de binario a string de Celulas vivas en mapa 
+                        for (int t = 0; t < tamaño; t++)
+                        {
+                            for (int p = 0; p < tamaño; p++)
+                            {
+                                if (log_mapa[p, t] == 1)
+                                {
+
+                                    mapa[p, t] = " ";
+                                    log_mapa[p, t] = 0;
+                                }
+                                else
+                                {
+                                    mapa[p, t] = "O";
+                                    log_mapa[p, t] = 1;
+                                }
+
+                            }
+                        }
+
+                        break;
+
+                    case 3:
+                        Console.WriteLine("caso 3");
+
+                        //   i  j
+
+                        log_mapa[19, 10] = 1;
+                        log_mapa[18, 11] = 1;
+                        log_mapa[20, 11] = 1;
+                        log_mapa[18, 12] = 1;
+                        log_mapa[20, 12] = 1;
+                        log_mapa[19, 13] = 1;
+                        log_mapa[18, 14] = 1;
+                        log_mapa[19, 14] = 1;
+                        log_mapa[17, 15] = 1;
+                        log_mapa[18, 15] = 1;
+                        log_mapa[20, 15] = 1;
+                        log_mapa[20, 16] = 1;
+                        log_mapa[24, 16] = 1;
+                        log_mapa[26, 16] = 1;
+                        log_mapa[17, 17] = 1;
+                        log_mapa[18, 17] = 1;
+                        log_mapa[24, 17] = 1;
+                        log_mapa[26, 17] = 1;
+                        log_mapa[27, 17] = 1;
+                        log_mapa[29, 17] = 1;
+                        log_mapa[30, 17] = 1;
+                        log_mapa[27, 18] = 1;
+                        log_mapa[28, 18] = 1;
+                        log_mapa[31, 18] = 1;
+                        log_mapa[25, 19] = 1;
+                        log_mapa[26, 19] = 1;
+                        log_mapa[29, 19] = 1;
+                        log_mapa[30, 19] = 1;
+                        log_mapa[12, 21] = 1;
+                        log_mapa[13, 21] = 1;
+                        log_mapa[16, 21] = 1;
+                        log_mapa[17, 21] = 1;
+                        log_mapa[11, 22] = 1;
+                        log_mapa[14, 22] = 1;
+                        log_mapa[15, 22] = 1;
+                        log_mapa[12, 23] = 1;
+                        log_mapa[13, 23] = 1;
+                        log_mapa[15, 23] = 1;
+                        log_mapa[16, 23] = 1;
+                        log_mapa[18, 23] = 1;
+                        log_mapa[24, 23] = 1;
+                        log_mapa[25, 23] = 1;
+                        log_mapa[16, 24] = 1;
+                        log_mapa[18, 24] = 1;
+                        log_mapa[22, 24] = 1;
+                        log_mapa[22, 25] = 1;
+                        log_mapa[24, 25] = 1;
+                        log_mapa[25, 25] = 1;
+                        log_mapa[23, 26] = 1;
+                        log_mapa[24, 26] = 1;
+                        log_mapa[23, 27] = 1;
+                        log_mapa[22, 28] = 1;
+                        log_mapa[24, 28] = 1;
+                        log_mapa[22, 29] = 1;
+                        log_mapa[24, 29] = 1;
+                        log_mapa[23, 30] = 1;
+
+
+                        //Convercion de binario a string de Celulas vivas en mapa 
+
+                        for (int t = 0; t < tamaño; t++) {
+                            for (int p = 0; p < tamaño; p++) {
+                                if (log_mapa[p, t] == 1) {
+
+                                    mapa[p, t] = "O";
+                                } else {
+                                    mapa[p, t] = " ";
+                                }
+                            }
+                        }
+
+                        break;
+
+                    case 4:
+                        Console.WriteLine("caso 4");
+
+
+                        //   i  j
+                        for (int t = 0; t < tamaño; t++)
+                        {
+                            for (int p = 0; p < tamaño; p++)
+                            {
+
+                                //   p  t
+                                log_mapa[p, t] = r.Next(0, 2);
+                            }
+                        }
+
+                        //Convercion de binario a string de Celulas vivas en mapa 
+                        for (int t = 0; t < tamaño; t++)
+                        {
+                            for (int p = 0; p < tamaño; p++)
+                            {
+                                if (log_mapa[p, t] == 1)
+                                {
+
+                                    mapa[p, t] = "O";
+                                }
+                                else
+                                {
+                                    mapa[p, t] = " ";
+                                }
+
+                            }
+                        }
+
+                        break;
+                    case 5:
+                        Console.WriteLine("caso 5");
+
+
+                        //   i  j
+                        for (int t = 0; t < tamaño; t++)
+                        {
+                            for (int p = 0; p < tamaño; p++)
+                            {
+
+                                //   p  t
+                                log_mapa[p, t] = r.Next(0, 2);
+                            }
+                        }
+
+                        //Convercion de binario a string de Celulas vivas en mapa 
+                        for (int t = 0; t < tamaño; t++)
+                        {
+                            for (int p = 0; p < tamaño; p++)
+                            {
+                                if (log_mapa[p, t] == 1)
+                                {
+
+                                    mapa[p, t] = "O";
+                                }
+                                else
+                                {
+                                    mapa[p, t] = " ";
+                                }
+
+                            }
+                        }
+
+                        break;
+
+
+                    case 6:
+                        Console.WriteLine("Testing");
+                        Thread.Sleep(retraso);
+
+                        //   i  j
+                        log_mapa[1, 1] = 1;
+                        log_mapa[2, 1] = 1;
+                        log_mapa[3, 1] = 1;
+
+                        log_mapa[1, 2] = 1;
+                        log_mapa[2, 2] = 1;
+                        log_mapa[3, 2] = 1;
+
+                        log_mapa[1, 3] = 1;
+                        log_mapa[2, 3] = 1;
+                        log_mapa[3, 3] = 1;
+
+
+
+
+                        //Convercion de binario a string de Celulas vivas en mapa 
+                        for (int t = 0; t < tamaño; t++)
+                        {
+                            for (int p = 0; p < tamaño; p++)
+                            {
+                                if (log_mapa[p, t] == 1)
+                                {
+
+                                    mapa[p, t] = "O";
+                                }
+                                else
+                                {
+                                    mapa[p, t] = " ";
+                                }
+
+                            }
+                        }
+
+
+                        break;
+
+
+                    default:
+
+                        
+                        Console.WriteLine("Default random");
+
+                        for (int t = 0; t < tamaño; t++)
+                        {
+                            for (int p = 0; p < tamaño; p++)
+                            {
+
+                                //   p  t
+                                log_mapa[p, t] = r.Next(0, 2);
+                            }
+                        }
+                        //Convercion de binario a string de Celulas vivas en mapa 
+                        for (int t = 0; t < tamaño; t++)
+                        {
+                            for (int p = 0; p < tamaño; p++)
+                            {
+                                if (log_mapa[p, t] == 1)
+                                {
+
+                                    mapa[p, t] = "O";
+                                }
+                                else
+                                {
+                                    mapa[p, t] = " ";
+                                }
+
+                            }
+                        }
+
+                        break;
+                }
+                //mensaje
+                for (int ñ = 0; ñ < 5; ñ++) {
+
+                    Console.WriteLine("Preparando simulación.");
+                    Console.WriteLine("Para mejor observacion abra la consola al maximo.");
+
+                    Thread.Sleep(retraso * 2);
+                    Console.Clear();
+                    Console.WriteLine("Preparando simulación..");
+                    Console.WriteLine("Para mejor observacion abra la consola al maximo.");
+
+                    Thread.Sleep(retraso * 3);
+                    Console.Clear();
+                    Console.WriteLine("Preparando simulación...");
+                    Console.WriteLine("Para mejor observacion abra la consola al maximo.");
+
+                    Thread.Sleep(retraso * 4);
+                    Console.Clear();
+                }
+
+
+                //Mostrar mapa
+
+                //estado inicial
+                Console.WriteLine("Estado Inicial del mapa \n");
+                for (int j = 0; j < (tamaño); j++)
+                {
+                    //filas mapa
+
+                    /*fila con los valores de mapa*/
+                    Console.WriteLine($"{mapa[0, j]} {mapa[1, j]} {mapa[2, j]} {mapa[3, j]} {mapa[4, j]} {mapa[5, j]} {mapa[6, j]} {mapa[7, j]} {mapa[8, j]} {mapa[9, j]} {mapa[10, j]} {mapa[11, j]} {mapa[12, j]} {mapa[12, j]} {mapa[14, j]} {mapa[15, j]} {mapa[16, j]} {mapa[17, j]} {mapa[18, j]} {mapa[19, j]} {mapa[20, j]} {mapa[21, j]} {mapa[22, j]} {mapa[23, j]} {mapa[24, j]} {mapa[25, j]} {mapa[26, j]} {mapa[27, j]} {mapa[28, j]} {mapa[29, j]} {mapa[30, j]} {mapa[31, j]} {mapa[32, j]} {mapa[32, j]} {mapa[34, j]} {mapa[35, j]} {mapa[36, j]} {mapa[37, j]} {mapa[38, j]} {mapa[39, j]}");
+                    Thread.Sleep(200);
 
                 }
-                else{
-                    Console.WriteLine("Valor ingresado no válido");
-                    Fin = false;
-                }
+
+                Console.Clear();
+
+                for (int duracion = 0; duracion < Uduracion +1 ; duracion++)
+                {
+                    Console.WriteLine($"Simulación despues de: {duracion} veces. \n");
+
+                    //ciclo por fila
+
+                    /*Imprime cada fila y cambia a la siguiente 
+                    * columna gracias al CICLO FOR */
+
+                    //columnas mapa
+                    for (int j  = 0; j < (tamaño); j++)
+                    {
+                        //filas mapa
+
+
+                        /*fila con los valores de mapa*/
+                        Console.WriteLine($"{mapa[0, j]} {mapa[1, j]} {mapa[2, j]} {mapa[3, j]} {mapa[4, j]} {mapa[5, j]} {mapa[6, j]} {mapa[7, j]} {mapa[8, j]} {mapa[9, j]} {mapa[10, j]} {mapa[11, j]} {mapa[12, j]} {mapa[12, j]} {mapa[14, j]} {mapa[15, j]} {mapa[16, j]} {mapa[17, j]} {mapa[18, j]} {mapa[19, j]} {mapa[20, j]} {mapa[21, j]} {mapa[22, j]} {mapa[23, j]} {mapa[24, j]} {mapa[25, j]} {mapa[26, j]} {mapa[27, j]} {mapa[28, j]} {mapa[29, j]} {mapa[30, j]} {mapa[31, j]} {mapa[32, j]} {mapa[32, j]} {mapa[34, j]} {mapa[35, j]} {mapa[36, j]} {mapa[37, j]} {mapa[38, j]} {mapa[39, j]}");
+
+                    }
+                    //Adaptacion mapa por simulacion//
+
+                    //Recorrido por cada celula
+
+                    for (int j = 0; j <= 39; j++) {
+                        for (int i = 0; i <= 39; i++)
+                        {
+                            int Cel_vecinas_V = 0;
+
+
+
+
+
+                            //Escaneo alrrededor de la celula en muestra
+
+                            /* Console.WriteLine("valor de i {0} valor de j {1} Inicio de ciclo", i, j);
+                             Console.ReadKey(); */
+
+                            //guarda los valores iniciales de i,j
+                            int vi = i;
+                            int vj = j;
+
+                            //-i -j (1)
+                            if (((vi -1) > 0) && ((vj -1) > 0))
+                            {
+
+                                if (log_mapa[(vi - 1), (vj - 1)] == 1)
+                                {
+                                    Cel_vecinas_V++;
+                                }
+                            }
+                          
+                            vi = i;
+                            vj = j;
+
+
+                            // i -j (2)
+                            if ((vj -1) > 0)
+                            {
+
+                                if (log_mapa[vi, (vj - 1)] == 1)
+                                {
+                                    Cel_vecinas_V++;
+                                }
+
+                            }
+                            
+                            vi = i;
+                            vj = j;
+
+                            // +i -j (3)
+                            if (((vi +1) < tamaño) && ((vj -1) > 0))
+                            {
+                                
+                                if (log_mapa[(vi + 1), (vj - 1)] == 1)
+                                {
+                                    Cel_vecinas_V++;
+                                }
+                            }
+                           
+                            vi = i;
+                            vj = j;
+
+                            // +i j (4)
+                            if ((vi +1) < tamaño)
+                            {
+                                if (log_mapa[(vi + 1), vj] == 1)
+                                {
+                                Cel_vecinas_V++;
+                                }
+                            }
+                           
+                            vi = i;
+                            vj = j;
+
+                            // +i +j (5)
+                          
+                            if (((vi +1) < tamaño) && ((vj +1) < tamaño))
+                            {
+                                if (log_mapa[(vi + 1), (vj + 1)] == 1)
+                                {
+                                    Cel_vecinas_V++;
+                                }
+                            }
+                           
+                            vi = i;
+                            vj = j;
+
+                            // i +j (6)
+                            if ((vj +1) < tamaño)
+                            {
+
+                                if (log_mapa[vi, (vj + 1)] == 1)
+                                {
+                                    Cel_vecinas_V++;
+                                }
+                            }
+                            
+
+                            vi = i;
+                            vj = j;
+                           
+
+                            // -i +j (7)
+                            if (((vi -1) > 0) && ((vj +1) < tamaño))
+                            {
+
+                                if (log_mapa[(vi - 1), (vj + 1)] == 1)
+                                {
+                                    Cel_vecinas_V++;
+
+                                }
+                            }
+                           
+                            vi = i;
+                            vj = j;
+
+
+
+
+                            // -i j (8)
+                            if ((vi -1) > 0)
+                            {
+
+                                if (log_mapa[(vi -1), vj] == 1)
+                                {
+                                    Cel_vecinas_V++;
+                                }
+                            }
+                           
+                            
+
+
+                            //Logica de revivir
+
+                            /*   Console.WriteLine($"- Valores i:{i} \n - Valores j: {j}");
+                               Console.WriteLine($"Valores celulas {Cel_vecinas_V}");
+                               Console.WriteLine($"Valores {log_Amapa[i, j]}");
+                               Console.ReadKey(); */
+                            //Condicion Celula Muerta
+
+
+                            if (log_mapa[i, j] != 1)
+                            {
+                                if (Cel_vecinas_V <= 3 && Cel_vecinas_V >= 3)
+                                {
+                                    log_Amapa[i, j] = 1;
+                                }
+                                else
+                                {
+                                    log_Amapa[i, j] = 0;
+                                }
+                            }
+                            else if (log_mapa[i, j] == 1)
+                            {
+                                if (Cel_vecinas_V == 2 || Cel_vecinas_V == 3) {
+                                    log_Amapa[i, j] = 1;
+                                } else {
+                                    log_Amapa[i, j] = 0;
+                                }
+                            }
+
+                           
+                          //  Console.WriteLine($"Valores i:{i} = {vi} \n - Valores j: {j} = {vj}");
+                            //Console.WriteLine($"Valores {log_Amapa[i, j]}");
+                         //   Console.ReadKey();
+                        //    Console.Clear();
+
+
+                        }
+                    }
+
+                    //conervir de binario a caracteres
+
+                    for (int t = 0; t < tamaño; t++)
+                    {
+                        for (int p = 0; p < tamaño; p++)
+                        {
+                            if (log_Amapa[p, t] == 1)
+                            {
+
+                                AMapa[p, t] = "O";
+                            }
+                            else
+                            {
+                                AMapa[p, t] = " ";
+                            }
+
+                        }
+                    }
+
+                    //Actualizacion del mapa
+
+
+                    for (int t = 0; t < tamaño; t++) {
+                        for (int p = 0; p < tamaño; p++) {
+                            if (log_Amapa[p, t] == 1) {
+
+                                mapa[p, t] = "O";
+                                log_mapa[p, t] = 1;
+                            } else {
+                                mapa[p, t] = " ";
+                                log_mapa[p, t] = 0;
+                            }
+                        }
+                    }
+
+                    Thread.Sleep(retraso);
+                    Console.Clear();
+                }//Fin ciclo for de muestra
+
+                Console.WriteLine("Fin de la simulacion Gracias por usar");
 
             }
-            //final de la consola
-            Console.WriteLine("Press any num for finish the program");
-            Console.ReadKey(true);
-            Console.WriteLine("Gregorio Ortega");
-        }
-      
-       
-    }
+            else {
+                Console.WriteLine("error 404");
+                Console.WriteLine(Espacios);
+                Console.ReadKey();
+            }
+
+            Console.WriteLine("press any key to exit");
+            Console.ReadKey();
+
+        }//final Main
+
+       static void arranque(int retraso){
+            for (int ñ = 0; ñ< 4; ñ++)
+            {
+
+                Console.WriteLine("Preparando Arranque de la simulación.");
+                Console.WriteLine($"Iniciando en: {4-ñ}");
+                Thread.Sleep(retraso);
+                Console.Clear();
+                Console.WriteLine("Preparando Arranque de la simulación..");
+                Console.WriteLine($"Iniciando en: {4 - ñ}");
+                Thread.Sleep(retraso* 2);
+                Console.Clear();
+                Console.WriteLine("Preparando Arranque de la simulación...");
+                Console.WriteLine($"Iniciando en: {4 - ñ}");
+                Thread.Sleep(retraso* 3);
+                Console.Clear();
+            }
+}
+  
+        
+
+    } //final Class Program
+
 }
