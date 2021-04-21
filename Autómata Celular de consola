@@ -16,8 +16,7 @@ namespace Automata_Celular_en_consola
 
             double Uduracion = 100;
             //Vairables de seguridad
-            int j = 0;
-            int i = 0;
+            
             Random r = new Random();
 
             // espacio que almacena las células
@@ -36,81 +35,65 @@ namespace Automata_Celular_en_consola
             while (pass == (false)) {
                 Console.WriteLine("Ingrese el números de veces que se repetirá el programa \n min: 50 max: 10000");
                 Uduracion = Convert.ToInt32(Console.ReadLine());
-                if (Uduracion >= 50 && Uduracion < 10000)
+                if (Uduracion >= 50 && Uduracion < 10001)
                 {
                     Uduracion = (int)Uduracion;
 
                     pass = true;
-                }else if (Uduracion > 50){
+                }
+                else if (Uduracion > 50)
+                {
                     Uduracion = 50;
                     pass = true;
                 }
             }
-           
-            for (int ñ = 0; ñ < 4; ñ++)
-            {
 
-                Console.WriteLine("Preparando Arranque de la simulación.");
-                Console.WriteLine($"Iniciando en: {4-ñ}");
-                Thread.Sleep(retraso);
-                Console.Clear();
-                Console.WriteLine("Preparando Arranque de la simulación..");
-                Console.WriteLine($"Iniciando en: {4 - ñ}");
-                Thread.Sleep(retraso * 2);
-                Console.Clear();
-                Console.WriteLine("Preparando Arranque de la simulación...");
-                Console.WriteLine($"Iniciando en: {4 - ñ}");
-                Thread.Sleep(retraso * 3);
-                Console.Clear();
-            }
-
+            arranque(retraso);
 
             //limpieza del mapa
-
+           
             int Espacios = 0;
             int Mapa_Length = mapa.Length;
 
-//ciclo de limpieza
-            for ( j = 0; j <= (tamaño - 1); j++){
-
-                for ( i = 0; i <= (tamaño - 1); i++){
+            for (int j = 0; j < (tamaño); j++)
+            {
+                for (int i = 0; i < (tamaño); i++)
+                {
 
                     log_mapa[i, j] = 0;
                     log_Amapa[i, j] = 0;
                     mapa[i, j] = " ";
                     AMapa[i, j] = " ";
-
-                    //comprovacion de asignacion inicial de valores;
-                    Console.WriteLine($"Valor espacio i: {i} j: {j} = { mapa[i, j]}");
-                    Console.WriteLine($"Valor espacio i: {i} j: {j} = { log_mapa[i, j]}");
-                    
                     Espacios++;
-                   
+
                 }
             }
+
+            //ciclo de limpieza
+
             Thread.Sleep(retraso);
             Console.Clear();
             //inicializacion correcta de Matrices temporales.
-            
+
             //funcion correr programa
             bool Correr_Programa(int Espacios, int Mapa_Length)
-             {
-                 bool estado;
-                 if (Espacios == Mapa_Length)
-                 {
-                     estado = true;
-                 }
-                 else
-                 {
-                     estado = false;
-                 }
-                 return estado;
-             }
+            {
+                bool estado;
+                if (Espacios == Mapa_Length)
+                {
+                    estado = true;
+                }
+                else
+                {
+                    estado = false;
+                }
+                return estado;
+            }
 
 
-             bool Correr = Correr_Programa(Espacios, Mapa_Length);
+            bool Correr = Correr_Programa(Espacios, Mapa_Length);
 
-//programa de simulacion
+            //programa de simulacion
 
             if (Correr == true)
             {
@@ -118,20 +101,20 @@ namespace Automata_Celular_en_consola
                 Thread.Sleep(retraso);
                 Console.Clear();
 
-//Seleecion de simulación
+                //Seleecion de simulación
 
                 int hh = 0;
-               
-                
+                do
+                {
                     Console.WriteLine("inserte el numero de simulacion que desea ver \n");
 
-                    for (int h = 1; h < 6; h++)
+                    for (int h = 1; h < 7; h++)
                     {
                         Console.WriteLine($"Simulación {h} = {h} \n");
                     }
 
-                   hh = Convert.ToInt32(Console.ReadLine());
-
+                    hh = Convert.ToInt32(Console.ReadLine());
+                } while (hh == 0);
 
 
                 //Valores precargados de la matriz
@@ -159,7 +142,7 @@ namespace Automata_Celular_en_consola
                         log_mapa[2, 10] = 1;
                         log_mapa[2, 9] = 1;
 
-                                   
+
 
 
 
@@ -168,7 +151,7 @@ namespace Automata_Celular_en_consola
                         {
                             for (int p = 0; p < tamaño; p++)
                             {
-                                if (log_mapa[p,t] == 1){
+                                if (log_mapa[p, t] == 1) {
 
                                     mapa[p, t] = "O";
                                 }
@@ -184,18 +167,18 @@ namespace Automata_Celular_en_consola
                         break;
 
                     case 2:
-                         
+
                         Console.WriteLine("caso 2 random");
 
-                        for (int t = 0; t < tamaño; t++){
-                             for(int p = 0; p < tamaño; p++){
+                        for (int t = 0; t < tamaño; t++) {
+                            for (int p = 0; p < tamaño; p++) {
 
                                 //   p  t
-                                log_mapa[p, t] = r.Next(0,2);
+                                log_mapa[p, t] = r.Next(0, 2);
                             }
                         }
 
-//Convercion de binario a string de Celulas vivas en mapa 
+                        //Convercion de binario a string de Celulas vivas en mapa 
                         for (int t = 0; t < tamaño; t++)
                         {
                             for (int p = 0; p < tamaño; p++)
@@ -232,7 +215,7 @@ namespace Automata_Celular_en_consola
                         log_mapa[19, 14] = 1;
                         log_mapa[17, 15] = 1;
                         log_mapa[18, 15] = 1;
-                        log_mapa[20, 15] = 1; 
+                        log_mapa[20, 15] = 1;
                         log_mapa[20, 16] = 1;
                         log_mapa[24, 16] = 1;
                         log_mapa[26, 16] = 1;
@@ -268,24 +251,26 @@ namespace Automata_Celular_en_consola
                         log_mapa[18, 24] = 1;
                         log_mapa[22, 24] = 1;
                         log_mapa[22, 25] = 1;
+                        log_mapa[24, 25] = 1;
+                        log_mapa[25, 25] = 1;
+                        log_mapa[23, 26] = 1;
                         log_mapa[24, 26] = 1;
-                        log_mapa[25, 26] = 1;
                         log_mapa[23, 27] = 1;
                         log_mapa[22, 28] = 1;
                         log_mapa[24, 28] = 1;
                         log_mapa[22, 29] = 1;
                         log_mapa[24, 29] = 1;
                         log_mapa[23, 30] = 1;
-                        
+
 
                         //Convercion de binario a string de Celulas vivas en mapa 
 
-                        for (int t = 0; t < tamaño; t++){
-                            for (int p = 0; p < tamaño; p++){
-                                if (log_mapa[p, t] == 1){
+                        for (int t = 0; t < tamaño; t++) {
+                            for (int p = 0; p < tamaño; p++) {
+                                if (log_mapa[p, t] == 1) {
 
                                     mapa[p, t] = "O";
-                                }else{
+                                } else {
                                     mapa[p, t] = " ";
                                 }
                             }
@@ -308,7 +293,7 @@ namespace Automata_Celular_en_consola
                             }
                         }
 
-//Convercion de binario a string de Celulas vivas en mapa 
+                        //Convercion de binario a string de Celulas vivas en mapa 
                         for (int t = 0; t < tamaño; t++)
                         {
                             for (int p = 0; p < tamaño; p++)
@@ -342,7 +327,7 @@ namespace Automata_Celular_en_consola
                             }
                         }
 
-//Convercion de binario a string de Celulas vivas en mapa 
+                        //Convercion de binario a string de Celulas vivas en mapa 
                         for (int t = 0; t < tamaño; t++)
                         {
                             for (int p = 0; p < tamaño; p++)
@@ -362,9 +347,52 @@ namespace Automata_Celular_en_consola
 
                         break;
 
+
+                    case 6:
+                        Console.WriteLine("Testing");
+                        Thread.Sleep(retraso);
+
+                        //   i  j
+                        log_mapa[1, 1] = 1;
+                        log_mapa[2, 1] = 1;
+                        log_mapa[3, 1] = 1;
+
+                        log_mapa[1, 2] = 1;
+                        log_mapa[2, 2] = 1;
+                        log_mapa[3, 2] = 1;
+
+                        log_mapa[1, 3] = 1;
+                        log_mapa[2, 3] = 1;
+                        log_mapa[3, 3] = 1;
+
+
+
+
+                        //Convercion de binario a string de Celulas vivas en mapa 
+                        for (int t = 0; t < tamaño; t++)
+                        {
+                            for (int p = 0; p < tamaño; p++)
+                            {
+                                if (log_mapa[p, t] == 1)
+                                {
+
+                                    mapa[p, t] = "O";
+                                }
+                                else
+                                {
+                                    mapa[p, t] = " ";
+                                }
+
+                            }
+                        }
+
+
+                        break;
+
+
                     default:
 
-                        hh = 6;
+                        
                         Console.WriteLine("Default random");
 
                         for (int t = 0; t < tamaño; t++)
@@ -376,7 +404,7 @@ namespace Automata_Celular_en_consola
                                 log_mapa[p, t] = r.Next(0, 2);
                             }
                         }
-//Convercion de binario a string de Celulas vivas en mapa 
+                        //Convercion de binario a string de Celulas vivas en mapa 
                         for (int t = 0; t < tamaño; t++)
                         {
                             for (int p = 0; p < tamaño; p++)
@@ -401,185 +429,202 @@ namespace Automata_Celular_en_consola
 
                     Console.WriteLine("Preparando simulación.");
                     Console.WriteLine("Para mejor observacion abra la consola al maximo.");
-                    
+
                     Thread.Sleep(retraso * 2);
                     Console.Clear();
                     Console.WriteLine("Preparando simulación..");
                     Console.WriteLine("Para mejor observacion abra la consola al maximo.");
-                   
+
                     Thread.Sleep(retraso * 3);
                     Console.Clear();
                     Console.WriteLine("Preparando simulación...");
                     Console.WriteLine("Para mejor observacion abra la consola al maximo.");
-                    
+
                     Thread.Sleep(retraso * 4);
                     Console.Clear();
                 }
 
 
-//Mostrar mapa
+                //Mostrar mapa
 
-//estado inicial
+                //estado inicial
                 Console.WriteLine("Estado Inicial del mapa \n");
-                for (j = 0; j < (tamaño); j++)
+                for (int j = 0; j < (tamaño); j++)
                 {
-//filas mapa
+                    //filas mapa
 
-/*fila con los valores de mapa*/
-                    Console.WriteLine($"{mapa[0, j]} {mapa[1, j]} {mapa[+2, j]} {mapa[+3, j]} {mapa[4, j]} {mapa[5, j]} {mapa[6, j]} {mapa[7, j]} {mapa[8, j]} {mapa[9, j]} {mapa[10, j]} {mapa[11, j]} {mapa[12, j]} {mapa[12, j]} {mapa[14, j]} {mapa[15, j]} {mapa[16, j]} {mapa[17, j]} {mapa[18, j]} {mapa[19, j]} {mapa[20, j]} {mapa[21, j]} {mapa[22, j]} {mapa[23, j]} {mapa[24, j]} {mapa[25, j]} {mapa[26, j]} {mapa[27, j]} {mapa[28, j]} {mapa[29, j]} {mapa[30, j]} {mapa[31, j]} {mapa[32, j]} {mapa[32, j]} {mapa[34, j]} {mapa[35, j]} {mapa[36, j]} {mapa[37, j]} {mapa[38, j]} {mapa[39, j]}");
+                    /*fila con los valores de mapa*/
+                    Console.WriteLine($"{mapa[0, j]} {mapa[1, j]} {mapa[2, j]} {mapa[3, j]} {mapa[4, j]} {mapa[5, j]} {mapa[6, j]} {mapa[7, j]} {mapa[8, j]} {mapa[9, j]} {mapa[10, j]} {mapa[11, j]} {mapa[12, j]} {mapa[12, j]} {mapa[14, j]} {mapa[15, j]} {mapa[16, j]} {mapa[17, j]} {mapa[18, j]} {mapa[19, j]} {mapa[20, j]} {mapa[21, j]} {mapa[22, j]} {mapa[23, j]} {mapa[24, j]} {mapa[25, j]} {mapa[26, j]} {mapa[27, j]} {mapa[28, j]} {mapa[29, j]} {mapa[30, j]} {mapa[31, j]} {mapa[32, j]} {mapa[32, j]} {mapa[34, j]} {mapa[35, j]} {mapa[36, j]} {mapa[37, j]} {mapa[38, j]} {mapa[39, j]}");
                     Thread.Sleep(200);
 
                 }
 
                 Console.Clear();
- 
-                for (int duracion = 0; duracion <= Uduracion; duracion++)
+
+                for (int duracion = 0; duracion < Uduracion +1 ; duracion++)
                 {
                     Console.WriteLine($"Simulación despues de: {duracion} veces. \n");
 
-//ciclo por fila
+                    //ciclo por fila
 
-                 /*Imprime cada fila y cambia a la siguiente 
-                 * columna gracias al CICLO FOR */
+                    /*Imprime cada fila y cambia a la siguiente 
+                    * columna gracias al CICLO FOR */
 
-//columnas mapa
-                    for (j = 0; j < (tamaño); j++)
+                    //columnas mapa
+                    for (int j  = 0; j < (tamaño); j++)
                     {
-//filas mapa
-                        
-                                                         
-/*fila con los valores de mapa*/  Console.WriteLine($"{mapa[0, j]} {mapa[1, j]} {mapa[+ 2, j]} {mapa[+ 3, j]} {mapa[4, j]} {mapa[5, j]} {mapa[6, j]} {mapa[7, j]} {mapa[8, j]} {mapa[9, j]} {mapa[10, j]} {mapa[11, j]} {mapa[12, j]} {mapa[12, j]} {mapa[14, j]} {mapa[15, j]} {mapa[16, j]} {mapa[17, j]} {mapa[18, j]} {mapa[19, j]} {mapa[20, j]} {mapa[21, j]} {mapa[22, j]} {mapa[23, j]} {mapa[24, j]} {mapa[25, j]} {mapa[26, j]} {mapa[27, j]} {mapa[28, j]} {mapa[29, j]} {mapa[30, j]} {mapa[31, j]} {mapa[32, j]} {mapa[32, j]} {mapa[34, j]} {mapa[35, j]} {mapa[36, j]} {mapa[37, j]} {mapa[38, j]} {mapa[39, j]}");
+                        //filas mapa
+
+
+                        /*fila con los valores de mapa*/
+                        Console.WriteLine($"{mapa[0, j]} {mapa[1, j]} {mapa[2, j]} {mapa[3, j]} {mapa[4, j]} {mapa[5, j]} {mapa[6, j]} {mapa[7, j]} {mapa[8, j]} {mapa[9, j]} {mapa[10, j]} {mapa[11, j]} {mapa[12, j]} {mapa[12, j]} {mapa[14, j]} {mapa[15, j]} {mapa[16, j]} {mapa[17, j]} {mapa[18, j]} {mapa[19, j]} {mapa[20, j]} {mapa[21, j]} {mapa[22, j]} {mapa[23, j]} {mapa[24, j]} {mapa[25, j]} {mapa[26, j]} {mapa[27, j]} {mapa[28, j]} {mapa[29, j]} {mapa[30, j]} {mapa[31, j]} {mapa[32, j]} {mapa[32, j]} {mapa[34, j]} {mapa[35, j]} {mapa[36, j]} {mapa[37, j]} {mapa[38, j]} {mapa[39, j]}");
 
                     }
- //Adaptacion mapa por simulacion//
+                    //Adaptacion mapa por simulacion//
 
- //Recorrido por cada celula
+                    //Recorrido por cada celula
 
-                    for (j = 0; j < (tamaño -1) ; j++) {
-                        for (i = 0; i < (tamaño -1) ; i++) {
+                    for (int j = 0; j <= 39; j++) {
+                        for (int i = 0; i <= 39; i++)
+                        {
                             int Cel_vecinas_V = 0;
 
-//guarda los valores iniciales de i,j
-                            int vi = i;
-                            int vj = j;
-                            
+
+
+
+
                             //Escaneo alrrededor de la celula en muestra
 
+                            /* Console.WriteLine("valor de i {0} valor de j {1} Inicio de ciclo", i, j);
+                             Console.ReadKey(); */
 
-//-i -j (1)
-                            if ((i-- > 0) && (j-- > 0))
+                            //guarda los valores iniciales de i,j
+                            int vi = i;
+                            int vj = j;
+
+                            //-i -j (1)
+                            if (((vi -1) > 0) && ((vj -1) > 0))
                             {
 
-                                if (log_mapa[i--, j--] == 1)
+                                if (log_mapa[(vi - 1), (vj - 1)] == 1)
                                 {
                                     Cel_vecinas_V++;
-                                 }
+                                }
                             }
-                            i = vi;
-                            j = vj;
+                          
+                            vi = i;
+                            vj = j;
 
- 
-// i -j (2)
-                            if ((j--) > 0)
+
+                            // i -j (2)
+                            if ((vj -1) > 0)
                             {
 
-                                if (log_mapa[i, j--] == 1)
+                                if (log_mapa[vi, (vj - 1)] == 1)
                                 {
                                     Cel_vecinas_V++;
                                 }
-                                 
+
                             }
-                            i = vi;
-                            j = vj;
-
-// +i -j (3)
-                            if ((i++ < tamaño) && (j-- > 0))
-                            {
-
-                                if (log_mapa[i++, j--] == 1)
-                                {
-                                    Cel_vecinas_V++;
-                                }
-                            }
-                            i = vi;
-                            j = vj;
-
-// +i j (4)
-                            if (i++ < tamaño) {
-
-                                if (i == 39)
-                                {
-                                    i = 38;
-                                }
-
-                                if (log_mapa[i++, j] == 1)
-                                {
-                                    Cel_vecinas_V++;
-                                }
-                            }
-
-                            i = vi;
-                            j = vj;
- 
-// +i +j (5)
-
-                            if ((i++ < tamaño) && (j++ < tamaño)) {
-
-                                if (log_mapa[i++, j++] == 1)
-                                {
-                                    Cel_vecinas_V++;
-                                    }
-                            }
-
-                            i = vi;
-                            j = vj;
-
-// i +j (6)
-                            if (j++ < tamaño) {
-
-                                if (log_mapa[i, j++] == 1)
-                                {
-                                    Cel_vecinas_V++;
-                                    }
-                            }
-
-                            i = vi;
-                            j = vj;
-
-// -i +j (7)
-                            if ((i-- > 0) && (j++ < tamaño)) {
-
-                                if (log_mapa[i--, j++] == 1)
-                                {
-                                    Cel_vecinas_V++;
-
-                                }
-                            }
-
-                            i = vi;
-                            j = vj;
-
-// -i j (8)
-                            if (i-- > 0) {
-
-                                if (log_mapa[i--, j] == 1)
-                                {
-                                    Cel_vecinas_V++;
-                                }
-                            }
-
-                            i = vi;
-                            j = vj;
-
                             
-//Logica de revivir
+                            vi = i;
+                            vj = j;
 
-    //Condicion Celula Muerta
-
-
-                            if (log_mapa[i, j] == 0)
+                            // +i -j (3)
+                            if (((vi +1) < tamaño) && ((vj -1) > 0))
                             {
-                                if (Cel_vecinas_V == 3)
+                                
+                                if (log_mapa[(vi + 1), (vj - 1)] == 1)
+                                {
+                                    Cel_vecinas_V++;
+                                }
+                            }
+                           
+                            vi = i;
+                            vj = j;
+
+                            // +i j (4)
+                            if ((vi +1) < tamaño)
+                            {
+                                if (log_mapa[(vi + 1), vj] == 1)
+                                {
+                                Cel_vecinas_V++;
+                                }
+                            }
+                           
+                            vi = i;
+                            vj = j;
+
+                            // +i +j (5)
+                          
+                            if (((vi +1) < tamaño) && ((vj +1) < tamaño))
+                            {
+                                if (log_mapa[(vi + 1), (vj + 1)] == 1)
+                                {
+                                    Cel_vecinas_V++;
+                                }
+                            }
+                           
+                            vi = i;
+                            vj = j;
+
+                            // i +j (6)
+                            if ((vj +1) < tamaño)
+                            {
+
+                                if (log_mapa[vi, (vj + 1)] == 1)
+                                {
+                                    Cel_vecinas_V++;
+                                }
+                            }
+                            
+
+                            vi = i;
+                            vj = j;
+                           
+
+                            // -i +j (7)
+                            if (((vi -1) > 0) && ((vj +1) < tamaño))
+                            {
+
+                                if (log_mapa[(vi - 1), (vj + 1)] == 1)
+                                {
+                                    Cel_vecinas_V++;
+
+                                }
+                            }
+                           
+                            vi = i;
+                            vj = j;
+
+
+
+
+                            // -i j (8)
+                            if ((vi -1) > 0)
+                            {
+
+                                if (log_mapa[(vi -1), vj] == 1)
+                                {
+                                    Cel_vecinas_V++;
+                                }
+                            }
+                           
+                            
+
+
+                            //Logica de revivir
+
+                            /*   Console.WriteLine($"- Valores i:{i} \n - Valores j: {j}");
+                               Console.WriteLine($"Valores celulas {Cel_vecinas_V}");
+                               Console.WriteLine($"Valores {log_Amapa[i, j]}");
+                               Console.ReadKey(); */
+                            //Condicion Celula Muerta
+
+
+                            if (log_mapa[i, j] != 1)
+                            {
+                                if (Cel_vecinas_V <= 3 && Cel_vecinas_V >= 3)
                                 {
                                     log_Amapa[i, j] = 1;
                                 }
@@ -590,12 +635,20 @@ namespace Automata_Celular_en_consola
                             }
                             else if (log_mapa[i, j] == 1)
                             {
-                                if (Cel_vecinas_V == 2 || Cel_vecinas_V == 3){
+                                if (Cel_vecinas_V == 2 || Cel_vecinas_V == 3) {
                                     log_Amapa[i, j] = 1;
-                                }else{
+                                } else {
                                     log_Amapa[i, j] = 0;
                                 }
                             }
+
+                           
+                          //  Console.WriteLine($"Valores i:{i} = {vi} \n - Valores j: {j} = {vj}");
+                            //Console.WriteLine($"Valores {log_Amapa[i, j]}");
+                         //   Console.ReadKey();
+                        //    Console.Clear();
+
+
                         }
                     }
 
@@ -621,19 +674,19 @@ namespace Automata_Celular_en_consola
                     //Actualizacion del mapa
 
 
-                    for (int t = 0; t < tamaño; t++){
-                            for (int p = 0; p < tamaño; p++){
-                                if (log_Amapa[p, t] == 1){
+                    for (int t = 0; t < tamaño; t++) {
+                        for (int p = 0; p < tamaño; p++) {
+                            if (log_Amapa[p, t] == 1) {
 
-                                    mapa[p, t] = "O";
+                                mapa[p, t] = "O";
                                 log_mapa[p, t] = 1;
-                                }else{
-                                    mapa[p, t] = " ";
+                            } else {
+                                mapa[p, t] = " ";
                                 log_mapa[p, t] = 0;
-                                }
                             }
                         }
-                   
+                    }
+
                     Thread.Sleep(retraso);
                     Console.Clear();
                 }//Fin ciclo for de muestra
@@ -641,17 +694,38 @@ namespace Automata_Celular_en_consola
                 Console.WriteLine("Fin de la simulacion Gracias por usar");
 
             }
-            else{
-                 Console.WriteLine("error 404");
-                 Console.WriteLine(Espacios);
-                 Console.ReadKey();
-             }
+            else {
+                Console.WriteLine("error 404");
+                Console.WriteLine(Espacios);
+                Console.ReadKey();
+            }
 
             Console.WriteLine("press any key to exit");
             Console.ReadKey();
-         
+
         }//final Main
+
+       static void arranque(int retraso){
+            for (int ñ = 0; ñ< 4; ñ++)
+            {
+
+                Console.WriteLine("Preparando Arranque de la simulación.");
+                Console.WriteLine($"Iniciando en: {4-ñ}");
+                Thread.Sleep(retraso);
+                Console.Clear();
+                Console.WriteLine("Preparando Arranque de la simulación..");
+                Console.WriteLine($"Iniciando en: {4 - ñ}");
+                Thread.Sleep(retraso* 2);
+                Console.Clear();
+                Console.WriteLine("Preparando Arranque de la simulación...");
+                Console.WriteLine($"Iniciando en: {4 - ñ}");
+                Thread.Sleep(retraso* 3);
+                Console.Clear();
+            }
+}
   
+        
+
     } //final Class Program
 
 }
