@@ -1,0 +1,13 @@
+C:\gregorio\multimedia\Códigos de Programacion all\C-C++ C#\Unitec\Registro de usuario\Registro de Entrada\Registro de Entrada\bin\Debug\netcoreapp3.1\Registro de Entrada.exe
+C:\gregorio\multimedia\Códigos de Programacion all\C-C++ C#\Unitec\Registro de usuario\Registro de Entrada\Registro de Entrada\bin\Debug\netcoreapp3.1\Registro de Entrada.deps.json
+C:\gregorio\multimedia\Códigos de Programacion all\C-C++ C#\Unitec\Registro de usuario\Registro de Entrada\Registro de Entrada\bin\Debug\netcoreapp3.1\Registro de Entrada.runtimeconfig.json
+C:\gregorio\multimedia\Códigos de Programacion all\C-C++ C#\Unitec\Registro de usuario\Registro de Entrada\Registro de Entrada\bin\Debug\netcoreapp3.1\Registro de Entrada.runtimeconfig.dev.json
+C:\gregorio\multimedia\Códigos de Programacion all\C-C++ C#\Unitec\Registro de usuario\Registro de Entrada\Registro de Entrada\bin\Debug\netcoreapp3.1\Registro de Entrada.dll
+C:\gregorio\multimedia\Códigos de Programacion all\C-C++ C#\Unitec\Registro de usuario\Registro de Entrada\Registro de Entrada\bin\Debug\netcoreapp3.1\Registro de Entrada.pdb
+C:\gregorio\multimedia\Códigos de Programacion all\C-C++ C#\Unitec\Registro de usuario\Registro de Entrada\Registro de Entrada\obj\Debug\netcoreapp3.1\Registro de Entrada.csprojAssemblyReference.cache
+C:\gregorio\multimedia\Códigos de Programacion all\C-C++ C#\Unitec\Registro de usuario\Registro de Entrada\Registro de Entrada\obj\Debug\netcoreapp3.1\Registro de Entrada.AssemblyInfoInputs.cache
+C:\gregorio\multimedia\Códigos de Programacion all\C-C++ C#\Unitec\Registro de usuario\Registro de Entrada\Registro de Entrada\obj\Debug\netcoreapp3.1\Registro de Entrada.AssemblyInfo.cs
+C:\gregorio\multimedia\Códigos de Programacion all\C-C++ C#\Unitec\Registro de usuario\Registro de Entrada\Registro de Entrada\obj\Debug\netcoreapp3.1\Registro de Entrada.csproj.CoreCompileInputs.cache
+C:\gregorio\multimedia\Códigos de Programacion all\C-C++ C#\Unitec\Registro de usuario\Registro de Entrada\Registro de Entrada\obj\Debug\netcoreapp3.1\Registro de Entrada.dll
+C:\gregorio\multimedia\Códigos de Programacion all\C-C++ C#\Unitec\Registro de usuario\Registro de Entrada\Registro de Entrada\obj\Debug\netcoreapp3.1\Registro de Entrada.pdb
+C:\gregorio\multimedia\Códigos de Programacion all\C-C++ C#\Unitec\Registro de usuario\Registro de Entrada\Registro de Entrada\obj\Debug\netcoreapp3.1\Registro de Entrada.genruntimeconfig.cache
