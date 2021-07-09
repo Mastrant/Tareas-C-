@@ -1,0 +1,16 @@
+C:\Users\hp1\Desktop\Tienda\Tienda\bin\Debug\net5.0\Tienda.exe
+C:\Users\hp1\Desktop\Tienda\Tienda\bin\Debug\net5.0\Tienda.deps.json
+C:\Users\hp1\Desktop\Tienda\Tienda\bin\Debug\net5.0\Tienda.runtimeconfig.json
+C:\Users\hp1\Desktop\Tienda\Tienda\bin\Debug\net5.0\Tienda.runtimeconfig.dev.json
+C:\Users\hp1\Desktop\Tienda\Tienda\bin\Debug\net5.0\Tienda.dll
+C:\Users\hp1\Desktop\Tienda\Tienda\bin\Debug\net5.0\ref\Tienda.dll
+C:\Users\hp1\Desktop\Tienda\Tienda\bin\Debug\net5.0\Tienda.pdb
+C:\Users\hp1\Desktop\Tienda\Tienda\obj\Debug\net5.0\Tienda.csproj.AssemblyReference.cache
+C:\Users\hp1\Desktop\Tienda\Tienda\obj\Debug\net5.0\Tienda.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\hp1\Desktop\Tienda\Tienda\obj\Debug\net5.0\Tienda.AssemblyInfoInputs.cache
+C:\Users\hp1\Desktop\Tienda\Tienda\obj\Debug\net5.0\Tienda.AssemblyInfo.cs
+C:\Users\hp1\Desktop\Tienda\Tienda\obj\Debug\net5.0\Tienda.csproj.CoreCompileInputs.cache
+C:\Users\hp1\Desktop\Tienda\Tienda\obj\Debug\net5.0\Tienda.dll
+C:\Users\hp1\Desktop\Tienda\Tienda\obj\Debug\net5.0\ref\Tienda.dll
+C:\Users\hp1\Desktop\Tienda\Tienda\obj\Debug\net5.0\Tienda.pdb
+C:\Users\hp1\Desktop\Tienda\Tienda\obj\Debug\net5.0\Tienda.genruntimeconfig.cache
